@@ -7,6 +7,10 @@ function App() {
     <div>
       <MyCountry />
       <MyCountryFun />
+      <br />
+      <div>
+        i created the clone of firstrect app project.
+      </div>
     </div>
   );
 }

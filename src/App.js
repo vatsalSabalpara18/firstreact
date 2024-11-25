@@ -1,14 +1,18 @@
 import './App.css';
-import LearnProps from './components/LearnProps';
-// import MyCountry from './components/MyCountry';
-// import MyCountryFun from './components/MyCountryFun';
+import Counter from './components/Counter';
+// import LearnProps from './components/LearnProps';
+import MyCountry from './components/MyCountry';
+import MyCountryFun from './components/MyCountryFun';
+import ToggleFruits from './components/ToggleFruits';
 
 function App() {
   return (
     <div>
       {/* <MyCountry />
       <MyCountryFun /> */}
-      <LearnProps name="LearnProps"/>
+      {/* <LearnProps name="LearnProps"/> */}
+      {/* <Counter /> */}
+      <ToggleFruits />
       <br />    
     </div>
   );

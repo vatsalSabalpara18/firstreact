@@ -19,7 +19,7 @@ function App() {
       {/* <ToggleFruits /> */}
       {/* <CounterFun /> */}
       {/* <ToogleFruits /> */}
-      <Courses />
+      {/* <Courses /> */}
       <ShowSingleCoures />
       <br />    
     </div>

@@ -9,7 +9,9 @@ export default function ShowSingleCourseFees(props) {
     }
     return (
         <>
-            <span>Counrese Fees: {feesData[cn]}</span>
+            {/* <span>Counrese Fees: {feesData[cn]}</span> */}
+            <td><b>Counrese Fees:</b></td>
+            <td>{feesData[cn]}</td>
         </>
     )
 }

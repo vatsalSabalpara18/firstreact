@@ -1,5 +1,8 @@
 import './App.css';
-import Timer from './components/Timer';
+import FetchProducts from './components/FetchProducts';
+import Spinner from './components/Spinner';
+// import Timer from './components/Timer';
+import TimerFun from './components/TimerFun';
 // import Counter from './components/Counter';
 // import CounterFun from './components/CounterFun';
 // import Courses from './components/Courses';
@@ -12,7 +15,7 @@ import Timer from './components/Timer';
 
 function App() {
   return (
-    <div>
+    <>
       {/* <MyCountry />
       <MyCountryFun /> */}
       {/* <LearnProps name="LearnProps"/> */}
@@ -22,9 +25,11 @@ function App() {
       {/* <ToogleFruits /> */}
       {/* <Courses /> */}
       {/* <ShowSingleCoures /> */}
-      <Timer />
-      <br />    
-    </div>
+      {/* <Timer /> */}
+      {/* <TimerFun /> */}
+      {/* <Spinner /> */}
+      <FetchProducts />
+    </>
   );
 }
 

@@ -60,3 +60,43 @@
   text-align: center;
   position: relative;  
 }
+
+.background-div {  
+  background-color: #3498db;
+  height: fit-content;
+  width: 90%;
+  margin: 2px auto;  
+}
+
+.outside-div{
+  position: relative;
+  width: 550px;
+  height: 850px;
+  border: 2px black solid;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 15px;
+  text-align: center;
+  background-color: white;
+}
+
+.product-div {  
+  position: absolute;
+  top: 50%;
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+}
+
+.checked {
+  color: orange;
+}
+
+.product-list-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.product-list-li {
+  float: left;
+}

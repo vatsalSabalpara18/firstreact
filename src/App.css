@@ -70,8 +70,8 @@
 
 .outside-div{
   position: relative;
-  width: 550px;
-  height: 850px;
+  width: 350px;
+  height: 550px;
   border: 2px black solid;
   border-radius: 15px;
   padding: 10px;
@@ -99,4 +99,62 @@
 }
 .product-list-li {
   float: left;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* form {
+  display: flex;
+  align-items: center;
+} */
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  margin-right: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* .search-button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+} */
+
+/* .search-button:hover {
+  background-color: #0056b3;
+}
+
+.search-button:active {
+  background-color: #004085;
+} */
+
+.dropdown {
+  padding: 10px;
+  margin-right: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.dropdown:focus {
+  border-color: #007bff;
+  outline: none;
 }

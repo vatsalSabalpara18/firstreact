@@ -158,3 +158,33 @@
   border-color: #007bff;
   outline: none;
 }
+
+/* App.css or ButtonContainer.css */
+
+/* Center the button container */
+.button-container {
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */  
+  gap: 20px; /* Add spacing between the buttons */
+}
+
+/* Styling for each button */
+.styled-button {
+  padding: 10px 20px; /* Button padding */
+  font-size: 16px; /* Text size */
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.styled-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.styled-button:focus {
+  outline: none; /* Remove outline when button is clicked */
+}

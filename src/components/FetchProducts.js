@@ -1,40 +1,59 @@
 import React, { useEffect, useState } from "react";
 import Loader from "./Loader";
 import SearchBar from "./SearchBar";
+import CategoriesButton from "./CategoriesButton";
 
 export default function FetchProducts() {
-    const [products, setProducts] = useState([]);    
+    const [products, setProducts] = useState([]);
     const [query, setQuery] = useState("");
     const [selectedOption, setSelectedOption] = useState("");
+    const [categoryName, setCategoryName] = useState('');
     const handleChange = (event) => {
         const query_value = event.target.value;
         setQuery(query_value);
-        console.log("QueryValue", query_value);        
-           const fillterData = products?.filter(
-                (item) =>
-                    item.title.toLowerCase().includes(query_value.toLowerCase()) ||
-                    item.category.toLowerCase().includes(query_value.toLowerCase()) || 
-                    item.description.toLowerCase().includes(query_value.toLowerCase()) ||
-                    item.price.toString().includes(query_value)
-            )        
     };
 
     const handleSelectChange = (event) => {
         const select_value = event.target.value;
         setSelectedOption(select_value);
-        console.log("select_value", select_value);
-        if (select_value === "Name(A-Z)") {
-            setProducts(products?.toSorted((a, b) => a.title.localeCompare(b.title)));
-        } else if (select_value === "Name(Z-A)") {
-            setProducts(products?.toSorted((a, b) => b.title.localeCompare(a.title)));
-        } else if (select_value === "PLH") {
-            setProducts(products?.toSorted((a, b) => a.price - b.price));
-        } else if (select_value === "PHL") {
-            setProducts(products?.toSorted((a, b) => b.price - a.price));
-        } else {
-            setProducts(products);
-        }
     };
+
+    const handleCategoriesButton = (value) => {
+        setCategoryName(value);
+    }
+
+    const handleSortSearch = () => {
+        // searching
+        let fillterData;
+        fillterData = products?.filter(
+            (item) =>
+                item.title.toLowerCase().includes(query.toLowerCase()) ||
+                item.category.toLowerCase().includes(query.toLowerCase()) ||
+                item.description.toLowerCase().includes(query.toLowerCase()) ||
+                item.price.toString().includes(query)
+        );
+
+        // sorting
+        if (selectedOption === "Name(A-Z)") {
+            fillterData?.sort((a, b) => a.title.localeCompare(b.title));
+        } else if (selectedOption === "Name(Z-A)") {
+            fillterData?.sort((a, b) => b.title.localeCompare(a.title));
+        } else if (selectedOption === "PLH") {
+            fillterData?.sort((a, b) => a.price - b.price);
+        } else if (selectedOption === "PHL") {
+            fillterData?.sort((a, b) => b.price - a.price);
+        }
+
+        // catagories        
+        if(categoryName !== "All" && categoryName){            
+               fillterData = fillterData.filter((v) => v.category === categoryName)
+        }
+            
+        return fillterData;
+    };
+
+
+    const fillterData = handleSortSearch();
 
     const getProducts = async () => {
         try {
@@ -58,7 +77,7 @@ export default function FetchProducts() {
             }
         }
         fetchData();
-    }, []);   
+    }, []);
 
     console.log("products", products);
     return (
@@ -74,9 +93,18 @@ export default function FetchProducts() {
                     handleSelectChange={handleSelectChange}
                 />
             </div>
+            <CategoriesButton
+                buttonArr={products.reduce((acc, value) => {
+                    if (!acc.some((v) => v === value.category)) {
+                        acc.push(value?.category);
+                    }
+                    return acc;
+                }, [])}
+                OnButtonClick={(value) => handleCategoriesButton(value)}
+            />
             <ul className="product-list-ul">
-                {products.length ? (
-                    products?.map((value) => {
+                {fillterData.length ? (
+                    fillterData?.map((value) => {
                         const ratings = value?.rating.rate;
                         return (
                             <li className="product-list-li">

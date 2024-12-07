@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import Loader from "./Loader";
 import SearchBar from "./SearchBar";
 import CategoriesButton from "./CategoriesButton";
+import Pagination from "./Pagination";
 
 export default function FetchProducts() {
     const [products, setProducts] = useState([]);
     const [query, setQuery] = useState("");
     const [selectedOption, setSelectedOption] = useState("");
-    const [categoryName, setCategoryName] = useState('');
+    const [categoryName, setCategoryName] = useState("");
+    const [pageNo, setPageNo] = useState(1);
+    const productsPerPage =  Math.ceil(products.length / 5)
     const handleChange = (event) => {
         const query_value = event.target.value;
         setQuery(query_value);
@@ -20,12 +23,19 @@ export default function FetchProducts() {
 
     const handleCategoriesButton = (value) => {
         setCategoryName(value);
-    }
+    };
 
     const handleSortSearch = () => {
         // searching
         let fillterData;
-        fillterData = products?.filter(
+        const indexOfLastRecord = pageNo * productsPerPage;
+        const indexOfFirstRecord = indexOfLastRecord - productsPerPage;
+
+        //pagination
+        fillterData = products?.slice(indexOfFirstRecord, indexOfLastRecord + 1)
+
+        //Searching
+        fillterData = fillterData?.filter(
             (item) =>
                 item.title.toLowerCase().includes(query.toLowerCase()) ||
                 item.category.toLowerCase().includes(query.toLowerCase()) ||
@@ -44,16 +54,32 @@ export default function FetchProducts() {
             fillterData?.sort((a, b) => b.price - a.price);
         }
 
-        // catagories        
-        if(categoryName !== "All" && categoryName){            
-               fillterData = fillterData.filter((v) => v.category === categoryName)
-        }
-            
+        // catagories
+        if (categoryName !== "All" && categoryName) {
+            fillterData = fillterData.filter((v) => v.category === categoryName);
+        }        
+
         return fillterData;
     };
 
 
     const fillterData = handleSortSearch();
+
+    const handleNextPage = () => {        
+        if (pageNo < productsPerPage) {
+            handlePagination(pageNo + 1);
+        }
+    };
+
+    const handlePrevousPage = () => {
+        if (pageNo > 1) {
+            handlePagination(pageNo - 1);
+        }
+    };
+
+    const handlePagination = (pageNo) => {
+        setPageNo(pageNo);
+    };
 
     const getProducts = async () => {
         try {
@@ -102,87 +128,96 @@ export default function FetchProducts() {
                 }, [])}
                 OnButtonClick={(value) => handleCategoriesButton(value)}
             />
-            <ul className="product-list-ul">
-                {fillterData.length ? (
-                    fillterData?.map((value) => {
-                        const ratings = value?.rating.rate;
-                        return (
-                            <li className="product-list-li">
-                                <div className="outside-div" key={value?.id}>
-                                    <div className="product-div" key={value?.id}>
-                                        <h3>{value?.title}</h3>
-                                        <img src={value?.image} height="250px" width="150px" />
-                                        <p style={{ fontSize: "25px", margin: "0" }}>
-                                            {value?.category}
-                                        </p>
-                                        <p
-                                            style={{
-                                                fontSize: "35px",
-                                                margin: "0",
-                                                fontWeight: "bolder",
-                                            }}
-                                        >
-                                            {"$" + value?.price}
-                                        </p>
-                                        {/* <p style={{ textAlign: "justify" }}>{value?.description}</p> */}
-                                        {/* <p>{ratings}<span>{value?.rating.count}</span></p> */}
-                                        <div className="rating">
-                                            <span
-                                                className={
-                                                    ratings >= 1
-                                                        ? "fa fa-star checked"
-                                                        : ratings > 0 && ratings < 1
-                                                            ? "fa fa-star-half-o checked"
-                                                            : "fa fa-star"
-                                                }
-                                            ></span>
-                                            <span
-                                                className={
-                                                    ratings >= 2
-                                                        ? "fa fa-star checked"
-                                                        : ratings > 1 && ratings < 2
-                                                            ? "fa fa-star-half-o checked"
-                                                            : "fa fa-star"
-                                                }
-                                            ></span>
-                                            <span
-                                                className={
-                                                    ratings >= 3
-                                                        ? "fa fa-star checked"
-                                                        : ratings > 2 && ratings < 3
-                                                            ? "fa fa-star-half-o checked"
-                                                            : "fa fa-star"
-                                                }
-                                            ></span>
-                                            <span
-                                                className={
-                                                    ratings >= 4
-                                                        ? "fa fa-star checked"
-                                                        : ratings > 3 && ratings < 4
-                                                            ? "fa fa-star-half-o checked"
-                                                            : "fa fa-star"
-                                                }
-                                            ></span>
-                                            <span
-                                                className={
-                                                    ratings >= 5
-                                                        ? "fa fa-star checked"
-                                                        : ratings > 4 && ratings < 5
-                                                            ? "fa fa-star-half-o checked"
-                                                            : "fa fa-star"
-                                                }
-                                            ></span>{" "}
-                                            <span>({value?.rating?.count})</span>
+            <Pagination                
+                productsPerPage={productsPerPage}
+                currentPage={pageNo}
+                handlePagination={handlePagination}
+                handleNextPage={handleNextPage}
+                handlePrevousPage={handlePrevousPage}
+            />
+            <div style={{ width: "90%", marginLeft: "auto", marginRight: "auto" }}>
+                <ul className="product-list-ul">
+                    {fillterData.length ? (
+                        fillterData?.map((value) => {
+                            const ratings = value?.rating.rate;
+                            return (
+                                <li className="product-list-li">
+                                    <div className="outside-div" key={value?.id}>
+                                        <div className="product-div" key={value?.id}>
+                                            <h3>{value?.title}</h3>
+                                            <img src={value?.image} height="250px" width="150px" />
+                                            <p style={{ fontSize: "25px", margin: "0" }}>
+                                                {value?.category}
+                                            </p>
+                                            <p
+                                                style={{
+                                                    fontSize: "35px",
+                                                    margin: "0",
+                                                    fontWeight: "bolder",
+                                                }}
+                                            >
+                                                {"$" + value?.price}
+                                            </p>
+                                            {/* <p style={{ textAlign: "justify" }}>{value?.description}</p> */}
+                                            {/* <p>{ratings}<span>{value?.rating.count}</span></p> */}
+                                            <div className="rating">
+                                                <span
+                                                    className={
+                                                        ratings >= 1
+                                                            ? "fa fa-star checked"
+                                                            : ratings > 0 && ratings < 1
+                                                                ? "fa fa-star-half-o checked"
+                                                                : "fa fa-star"
+                                                    }
+                                                ></span>
+                                                <span
+                                                    className={
+                                                        ratings >= 2
+                                                            ? "fa fa-star checked"
+                                                            : ratings > 1 && ratings < 2
+                                                                ? "fa fa-star-half-o checked"
+                                                                : "fa fa-star"
+                                                    }
+                                                ></span>
+                                                <span
+                                                    className={
+                                                        ratings >= 3
+                                                            ? "fa fa-star checked"
+                                                            : ratings > 2 && ratings < 3
+                                                                ? "fa fa-star-half-o checked"
+                                                                : "fa fa-star"
+                                                    }
+                                                ></span>
+                                                <span
+                                                    className={
+                                                        ratings >= 4
+                                                            ? "fa fa-star checked"
+                                                            : ratings > 3 && ratings < 4
+                                                                ? "fa fa-star-half-o checked"
+                                                                : "fa fa-star"
+                                                    }
+                                                ></span>
+                                                <span
+                                                    className={
+                                                        ratings >= 5
+                                                            ? "fa fa-star checked"
+                                                            : ratings > 4 && ratings < 5
+                                                                ? "fa fa-star-half-o checked"
+                                                                : "fa fa-star"
+                                                    }
+                                                ></span>{" "}
+                                                <span>({value?.rating?.count})</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        );
-                    })
-                ) : (
-                    <Loader />
-                )}
-            </ul>
+                                </li>
+                            );
+                        })
+                    ) : (
+                        <h1 style={{textAlign: "center"}}>No Data Found</h1>
+                    )}
+                </ul>
+            </div>
         </div>
     );
 }

@@ -14,12 +14,12 @@ export default function Pagination({
     }
     return (
         <div className="product-pagination">
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                <button onClick={handlePrevousPage} disabled={currentPage <= 1}>Prevous Page</button>
+            <div style={{ display: "flex", justifyContent:"space-evenly", padding: "5px"}}>
+                <button className="styled-button" onClick={handlePrevousPage} disabled={currentPage <= 1}>Prevous Page</button>
                 {paginationNumbers.map((pageNo) => {
-                    return <button key={pageNo} className={currentPage === pageNo ? 'active' : ''} onClick={() => handlePagination(pageNo)}>{pageNo}</button>;
+                    return <button key={pageNo} className={currentPage === pageNo ? 'styled-button-active' : 'styled-button'} onClick={() => handlePagination(pageNo)}>{pageNo}</button>;
                 })}
-                <button onClick={handleNextPage} disabled={currentPage >= productsPerPage}>Next Page</button>
+                <button className="styled-button" onClick={handleNextPage} disabled={currentPage >= productsPerPage}>Next Page</button>
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import React from 'react';
 const SearchBar = ({ handleChange, query, handleSelectChange, selectedOption }) => {
 
     return (
-        <div className="search-bar-container">
+        <>
             <input
                 type="text"
                 className="search-input"
@@ -22,7 +22,7 @@ const SearchBar = ({ handleChange, query, handleSelectChange, selectedOption }) 
                 <option value="PLH">Price (Low-High)</option>
                 <option value="PHL">Price (High-Low)</option>
             </select>
-        </div>
+        </>
     );
 };
 

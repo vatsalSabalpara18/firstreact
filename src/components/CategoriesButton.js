@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function CategoriesButton({ buttonArr, OnButtonClick }) {
-    const handleButtonClick = (e, v) => {        
+    const [currentButton, setCurrentButton] = useState("All")
+    const handleButtonClick = (e, v) => {                
+        setCurrentButton(v)
         OnButtonClick(v)
-    }
+    }    
     return (
         <div className="button-container">
-            <button onClick={(e) => handleButtonClick(e, "All")} className="styled-button">All</button>
+            <button onClick={(e) => handleButtonClick(e, "All")} className={currentButton === "All" ? "styled-button-active" : "styled-button"}>All</button>
             {
                 buttonArr?.map((v) => {                    
                     return (
-                        <button onClick={(e) => handleButtonClick(e, v)} className="styled-button">{v}</button>
+                        <button onClick={(e) => handleButtonClick(e, v)} className={currentButton === v ? "styled-button-active" : "styled-button"}>{v}</button>
                     )
                 })
             }
